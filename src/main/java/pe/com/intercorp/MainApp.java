@@ -2,7 +2,9 @@ package pe.com.intercorp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean; 
+import org.springframework.context.annotation.Bean;  
+import pe.com.intercorp.bean.Customer; 
+import pe.com.intercorp.repository.CustomerRepository;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -14,10 +16,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  
 /**
  * MainApp
- * @author cguerra
+ * @author mgrasso
  **/
  @SpringBootApplication
- @EnableSwagger2            //IMPORTANTE: 'SWAGGER' 
+ @EnableSwagger2         //IMPORTANTE: 'SWAGGER' 
  public class MainApp{
  
 	    public static final String PAQUETE_SCAN = "pe.com.intercorp.controller";
@@ -54,5 +56,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 	    }
 	    //---------------------------------------- [SWAGGER] ----------------------------------------// 
 	    
+		@Bean
+		CustomerRepository repository(){
+			
+			CustomerRepository ojRepository = new CustomerRepository(); 
+            
+			//IMPORTANTE: 'CARGA INICIAL' (El campo: 'EDAD' es calculable dinamicamente): 
+			ojRepository.agregarCustomer( new Customer( 1, "CESAR MARTIN", "CRIADO VERA",      0, "01/03/1993" ) );
+			ojRepository.agregarCustomer( new Customer( 2, "PAULO JULIO",  "PEREZ RAIMOND",    0, "21/01/1992" ) );
+			ojRepository.agregarCustomer( new Customer( 3, "PEDRO FELIPE", "CALAGUA JORDAN",   0, "15/07/1990" ) );
+			ojRepository.agregarCustomer( new Customer( 4, "MIGUEL MARIO", "ESPINOZA CARCAMO", 0, "11/10/1987" ) );	
+			
+			return ojRepository;
+		}
+ 	    
  }
 
