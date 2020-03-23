@@ -1,0 +1,144 @@
+swagger: '2.0'
+info:
+  description: 'CONTRATO/API DEL MICROSERVICIO: customer-service'
+  version: '1.0'
+  title: 'CONTRATO/API PARA LA GESTION DEL MICROSERVICIO: customer-service'
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: mgrassoaguinaga@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    
+host: pe.com.intercorp
+basePath: /customerservice
+schemes:
+  - http
+  
+paths:  
+  #####################################################################################################
+  ############################################ [UTILIDAD] ############################################
+  #####################################################################################################
+  /status:
+    get:
+      summary: Funcionalidad para medir del HEALTH CHECK del servicio.
+      description: Funcionalidad para medir del HEALTH CHECK del servicio.
+      operationId: checkStatus
+      responses:
+        '200':
+          description: PROCESO EXITOSO
+          schema:
+            type: string
+        '400':
+          description: ERROR EN EL PROCESO 
+          schema:
+            type: string
+
+
+  ####################################################################################################
+  ############################################ [CLIENTES] ############################################
+  ####################################################################################################
+  
+  ########## [MICROSERVICIO#1] ##########
+  /creacliente:
+    post:
+      summary: Funcionalidad para [REGISTRAR] una ENTIDAD de tipo Customer.
+      description: Funcionalidad para [REGISTRAR] una ENTIDAD de tipo Customer.
+      operationId: creacliente
+      produces: 
+        - application/json
+      parameters:
+        - name: body
+          in: body 
+          description: La Entidad del Customer
+          required: true
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: PROCESO EXITOSO
+          schema:
+            type: string
+        '400':
+          description: ERROR EN EL PROCESO 
+          schema:
+            type: string
+              
+             
+  ########## [MICROSERVICIO#2] ##########
+  /kpiclientes:
+    get:
+      summary: Funcionalidad para [CONSULTAR] datos de una ENTIDAD de tipo Customer.
+      description: Funcionalidad para [CONSULTAR] datos de una ENTIDAD de tipo Customer. 
+      operationId: kpiclientes
+      responses:
+        '200':
+          description: PROCESO EXITOSO
+          schema:
+            $ref: '#/definitions/ResponseDataMsg'
+        '400':
+          description: ERROR EN EL PROCESO 
+          schema:
+            $ref: '#/definitions/ResponseDataMsg'  
+            
+  ########## [MICROSERVICIO#3] ##########        
+  /listclientes:
+    get:
+      summary: Funcionalidad para [CONSULTAR] la LISTA de una ENTIDAD de tipo Customer.
+      description: Funcionalidad para [CONSULTAR] la LISTA de una ENTIDAD de tipo Customer.
+      operationId: listclientes
+      responses:
+        '200':
+          description: PROCESO EXITOSO
+          schema:
+            $ref: '#/definitions/ResponseCustMsg'
+        '400':
+          description: ERROR EN EL PROCESO 
+          schema:
+            $ref: '#/definitions/ResponseCustMsg' 
+  
+
+ #####################################################################################################
+ ########################################### [ENTIDADES] #############################################
+ ##################################################################################################### 
+definitions: 
+  Customer:
+    type: object
+    required:
+      - nombre
+      - apellido
+      - edad  
+      - fechaNacimiento  
+    properties:
+      id:
+        type: integer
+      nombre:
+        type: string
+      apellido:
+        type: string
+      edad:
+        type: integer
+      fechaNacimiento:
+        type: string
+           
+  ResponseCustMsg:
+    type: object 
+    properties:
+      listCustomers:
+        type: array
+        items:
+          $ref: '#/definitions/Customer'
+ 
+  ResponseDataMsg:
+    type: object
+    properties:
+      kpiCustomer:
+        type: object
+        required:
+          - promedio
+          - desviacionEstandar
+        properties:
+          promedio:
+            type: string
+          desviacionEstandar:
+            type: string
