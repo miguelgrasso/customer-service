@@ -32,7 +32,7 @@ import pe.com.intercorp.service.CustomerService;
         * checkStatus 
         * @return String
         **/
-		@GetMapping( "status" )
+		@GetMapping( "/status" )
 	    @ApiOperation( value="Funcionalidad para medi del HEALTH CHECK del servicio.", nickname="checkStatus", notes="Funcionalidad para medir del HEALTH CHECK del servicio." )
 		public String checkStatus(){
                return "ok";
